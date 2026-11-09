@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Practice Login</title>
+<style>
+  body { font-family: Arial; background:#0A0A0A; color:#fff; padding:20px; }
+  input { width:90%; padding:10px; margin:8px 0; border-radius:8px; border:none; }
+  button { background:#E50914; color:#fff; padding:10px 20px; border:none; border-radius:8px; }
+  #result { margin-top:16px; padding:12px; background:#1A1A1A; border-radius:8px; }
+</style>
+</head>
+<body>
+<h2>Practice Login</h2>
+<p>This checks your typed username and password against a weak rule on purpose. Try to log in without knowing the real password.</p>
+
+<input id="u" placeholder="Username"><br>
+<input id="p" placeholder="Password" type="text"><br>
+<button onclick="tryLogin()">Login</button>
+<div id="result"></div>
+
+<script>
+// INTENTIONALLY WEAK CHECK FOR PRACTICE ONLY
+function tryLogin() {
+  var u = document.getElementById('u').value;
+  var p = document.getElementById('p').value;
+  var query = "username='" + u + "' AND password='" + p + "'";
+  // Weak rule: if the typed text contains a quote and OR, it tricks the check
+  var bypass = /'\s*or\s*'?1'?\s*=\s*'?1/i.test(u) || /'\s*or\s*'?1'?\s*=\s*'?1/i.test(p);
+  if ((u === "admin" && p === "letmein123") || bypass) {
+    document.getElementById('result').innerHTML = "✅ ACCESS GRANTED, welcome admin.<br><small>Query was: " + query + "</small>";
+  } else {
+    document.getElementById('result').innerHTML = "❌ Access denied.<br><small>Query was: " + query + "</small>";
+  }
+}
+</script>
+</body>
+  </html>
